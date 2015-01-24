@@ -58,3 +58,31 @@ func TestGIFSicle_Resize(t *testing.T) {
 		assert.NotEqual(t, 0, s.Len())
 	}
 }
+
+func BenchmarkGIFSicle_singleFrame(b *testing.B) {
+	g := GIFSicle{}
+	r := loadFixture("gopher.gif")
+	x := ResizeOption{Width: 80, Height: 80, Format: "gif"}
+
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		s := new(bytes.Buffer)
+		r.Seek(0, 0)
+		g.Resize(s, r, x)
+	}
+}
+
+func BenchmarkGIFSicle_multipleFrames(b *testing.B) {
+	g := GIFSicle{}
+	r := loadFixture("animation.gif")
+	x := ResizeOption{Width: 80, Height: 80, Format: "gif"}
+
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		s := new(bytes.Buffer)
+		r.Seek(0, 0)
+		g.Resize(s, r, x)
+	}
+}
