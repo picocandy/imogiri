@@ -2,13 +2,13 @@ fmt:
 	go fmt ./...
 
 test:
-	go test -v -race
+	godep go test -v -race
 
 bench:
-	go test -bench=.
+	godep go test -bench=.
 
 cover:
-	go test -v -race -coverprofile=coverage.out
+	godep go test -v -race -coverprofile=coverage.out
 
 html:
 	go tool cover -html=coverage.out

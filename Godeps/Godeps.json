@@ -1,0 +1,14 @@
+{
+	"ImportPath": "github.com/subosito/imogiri",
+	"GoVersion": "go1.4.1",
+	"Deps": [
+		{
+			"ImportPath": "github.com/nfnt/resize",
+			"Rev": "8f4493144849aa7855fc525f5953c439180e6f25"
+		},
+		{
+			"ImportPath": "github.com/stretchr/testify/assert",
+			"Rev": "2eaa4b48b8954bf871229043b8064ca156a542a5"
+		}
+	]
+}
