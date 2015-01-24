@@ -3,6 +3,7 @@ package imogiri
 import (
 	"errors"
 	"fmt"
+	"github.com/rakyll/magicmime"
 )
 
 func formatChecker(sourceFormats, targetFormats []string, source, target string) error {
@@ -39,4 +40,14 @@ func isSupported(str string, formats []string) bool {
 	}
 
 	return false
+}
+
+func mimeBuffer(b []byte) (string, error) {
+	m, err := magicmime.New(magicmime.MAGIC_MIME_TYPE | magicmime.MAGIC_ERROR)
+	if err != nil {
+		return "", err
+	}
+	defer m.Close()
+
+	return m.TypeByBuffer(b)
 }

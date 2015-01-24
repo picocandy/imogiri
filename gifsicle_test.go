@@ -66,6 +66,10 @@ func TestGIFSicle_Resize(t *testing.T) {
 		err := g.Resize(s, r, x)
 		assert.Nil(t, err)
 		assert.NotEqual(t, 0, s.Len())
+
+		mm, err := mimeBuffer(s.Bytes())
+		assert.Nil(t, err)
+		assert.Equal(t, "image/gif", mm)
 	}
 }
 

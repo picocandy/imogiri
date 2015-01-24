@@ -82,6 +82,16 @@ func TestNFNT_Resize(t *testing.T) {
 			err := n.Resize(s, r, x)
 			assert.Nil(t, err)
 			assert.NotEqual(t, 0, s.Len())
+
+			mm, err := mimeBuffer(s.Bytes())
+			assert.Nil(t, err)
+
+			switch c[i] {
+			case "png":
+				assert.Equal(t, "image/png", mm)
+			case "jpg":
+				assert.Equal(t, "image/jpeg", mm)
+			}
 		}
 	}
 }
