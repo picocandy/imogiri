@@ -7,8 +7,28 @@
 			"Rev": "8f4493144849aa7855fc525f5953c439180e6f25"
 		},
 		{
+			"ImportPath": "github.com/rakyll/magicmime",
+			"Rev": "672bd9146d1802abfd8a851fb428e6070d524e3d"
+		},
+		{
 			"ImportPath": "github.com/stretchr/testify/assert",
 			"Rev": "2eaa4b48b8954bf871229043b8064ca156a542a5"
+		},
+		{
+			"ImportPath": "golang.org/x/image/riff",
+			"Rev": "7f6859d3853a76e5c6de50cac970173a9b803517"
+		},
+		{
+			"ImportPath": "golang.org/x/image/vp8",
+			"Rev": "7f6859d3853a76e5c6de50cac970173a9b803517"
+		},
+		{
+			"ImportPath": "golang.org/x/image/vp8l",
+			"Rev": "7f6859d3853a76e5c6de50cac970173a9b803517"
+		},
+		{
+			"ImportPath": "golang.org/x/image/webp",
+			"Rev": "7f6859d3853a76e5c6de50cac970173a9b803517"
 		}
 	]
 }
