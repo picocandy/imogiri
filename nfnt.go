@@ -2,6 +2,7 @@ package imogiri
 
 import (
 	"github.com/nfnt/resize"
+	"golang.org/x/image/webp"
 	"image"
 	"image/jpeg"
 	"image/png"
@@ -9,7 +10,7 @@ import (
 )
 
 var (
-	nfntSourceFormats = []string{"jpg", "png"}
+	nfntSourceFormats = []string{"jpg", "png", "webp"}
 	nfntTargetFormats = []string{"jpg", "png"}
 )
 
@@ -37,6 +38,8 @@ func (n NFNT) decode(r io.Reader, format string) (m image.Image, err error) {
 		m, err = jpeg.Decode(r)
 	case "png":
 		m, err = png.Decode(r)
+	case "webp":
+		m, err = webp.Decode(r)
 	}
 
 	return

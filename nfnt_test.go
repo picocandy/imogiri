@@ -65,19 +65,24 @@ func TestNFNT_Resize_conversion(t *testing.T) {
 
 func TestNFNT_Resize(t *testing.T) {
 	f := map[string]string{
-		"png": "gopher.png",
-		"jpg": "gopher.jpg",
+		"png":  "gopher.png",
+		"jpg":  "gopher.jpg",
+		"webp": "gopher.webp",
 	}
 
-	for k, v := range f {
-		x := ResizeOption{Width: 80, Height: 80, Format: k}
-		n := NFNT{}
-		s := new(bytes.Buffer)
-		r := loadFixture(v)
+	c := []string{"png", "jpg"}
 
-		err := n.Resize(s, r, x)
-		assert.Nil(t, err)
-		assert.NotEqual(t, 0, s.Len())
+	for k, v := range f {
+		for i := range c {
+			x := ResizeOption{Width: 80, Height: 80, FromFormat: k, Format: c[i]}
+			n := NFNT{}
+			s := new(bytes.Buffer)
+			r := loadFixture(v)
+
+			err := n.Resize(s, r, x)
+			assert.Nil(t, err)
+			assert.NotEqual(t, 0, s.Len())
+		}
 	}
 }
 
