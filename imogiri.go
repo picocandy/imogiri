@@ -7,9 +7,18 @@ import (
 )
 
 type ResizeOption struct {
-	Width  uint
-	Height uint
-	Format string
+	Width      uint
+	Height     uint
+	FromFormat string
+	Format     string
+}
+
+func (o ResizeOption) sourceFormat() string {
+	if o.FromFormat == "" {
+		return o.Format
+	}
+
+	return o.FromFormat
 }
 
 type Resizer interface {

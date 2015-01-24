@@ -8,15 +8,20 @@ import (
 	"io"
 )
 
+var (
+	nfntSourceFormats = []string{"jpg", "png"}
+	nfntTargetFormats = []string{"jpg", "png"}
+)
+
 type NFNT struct{}
 
 func (n NFNT) Resize(w io.Writer, r io.Reader, opt ResizeOption) error {
-	err := formatChecker(opt.Format, n.supportedFormats())
+	err := n.formatChecker(opt.sourceFormat(), opt.Format)
 	if err != nil {
 		return err
 	}
 
-	img, err := n.decode(r, opt.Format)
+	img, err := n.decode(r, opt.sourceFormat())
 	if err != nil {
 		return err
 	}
@@ -50,6 +55,6 @@ func (n NFNT) encode(w io.Writer, m image.Image, format string) error {
 	return err
 }
 
-func (n NFNT) supportedFormats() []string {
-	return []string{"png", "jpg"}
+func (n NFNT) formatChecker(source, target string) error {
+	return formatChecker(nfntSourceFormats, nfntTargetFormats, source, target)
 }

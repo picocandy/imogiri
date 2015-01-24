@@ -25,7 +25,17 @@ func TestGIFSicle_Resize_missingFormat(t *testing.T) {
 }
 
 func TestGIFSicle_Resize_unknownFormat(t *testing.T) {
-	x := ResizeOption{Width: 80, Height: 80, Format: "png"}
+	x := ResizeOption{Width: 80, Height: 80, FromFormat: "gif", Format: "png"}
+	g := GIFSicle{}
+	s := new(bytes.Buffer)
+	r := new(bytes.Reader)
+	err := g.Resize(s, r, x)
+	assert.NotNil(t, err)
+	assert.Equal(t, `Format "png" is not supported`, err.Error())
+}
+
+func TestGIFSicle_Resize_unknownFromFormat(t *testing.T) {
+	x := ResizeOption{Width: 80, Height: 80, FromFormat: "png", Format: "gif"}
 	g := GIFSicle{}
 	s := new(bytes.Buffer)
 	r := new(bytes.Reader)

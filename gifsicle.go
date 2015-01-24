@@ -8,10 +8,15 @@ import (
 	"os/exec"
 )
 
+var (
+	gifSicleSourceFormats = []string{"gif"}
+	gifSicleTargetFormats = []string{"gif"}
+)
+
 type GIFSicle struct{}
 
 func (g GIFSicle) Resize(w io.Writer, r io.Reader, opt ResizeOption) error {
-	err := formatChecker(opt.Format, g.supportedFormats())
+	err := g.formatChecker(opt.sourceFormat(), opt.Format)
 	if err != nil {
 		return err
 	}
@@ -35,6 +40,6 @@ func (g GIFSicle) execName() string {
 	return "gifsicle"
 }
 
-func (g GIFSicle) supportedFormats() []string {
-	return []string{"gif"}
+func (g GIFSicle) formatChecker(source, target string) error {
+	return formatChecker(gifSicleSourceFormats, gifSicleTargetFormats, source, target)
 }
