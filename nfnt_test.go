@@ -6,6 +6,36 @@ import (
 	"testing"
 )
 
+func TestNFNT_Resize_missingFormat(t *testing.T) {
+	x := ResizeOption{Width: 80, Height: 80, Format: ""}
+	n := NFNT{}
+	s := new(bytes.Buffer)
+	r := new(bytes.Reader)
+	err := n.Resize(s, r, x)
+	assert.NotNil(t, err)
+	assert.Equal(t, "Please specify the format of the image", err.Error())
+}
+
+func TestNFNT_Resize_unknownFormat(t *testing.T) {
+	x := ResizeOption{Width: 80, Height: 80, Format: "box"}
+	n := NFNT{}
+	s := new(bytes.Buffer)
+	r := new(bytes.Reader)
+	err := n.Resize(s, r, x)
+	assert.NotNil(t, err)
+	assert.Equal(t, `Format "box" is not supported`, err.Error())
+}
+
+func TestNFNT_Resize_invalidImage(t *testing.T) {
+	x := ResizeOption{Width: 80, Height: 80, Format: "jpg"}
+	n := NFNT{}
+	s := new(bytes.Buffer)
+	r := loadFixture("invalid.jpg")
+	err := n.Resize(s, r, x)
+	assert.NotNil(t, err)
+	assert.Equal(t, `unexpected EOF`, err.Error())
+}
+
 func TestNFNT_Resize(t *testing.T) {
 	f := map[string]string{
 		"png": "gopher.png",
@@ -15,7 +45,7 @@ func TestNFNT_Resize(t *testing.T) {
 	for k, v := range f {
 		x := ResizeOption{Width: 80, Height: 80, Format: k}
 		n := NFNT{}
-		s := bytes.NewBuffer([]byte{})
+		s := new(bytes.Buffer)
 		r := loadFixture(v)
 
 		err := n.Resize(s, r, x)
@@ -32,7 +62,7 @@ func BenchmarkNFNT_Resize(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		s := bytes.NewBuffer([]byte{})
+		s := new(bytes.Buffer)
 		r.Seek(0, 0)
 		n.Resize(s, r, x)
 	}
