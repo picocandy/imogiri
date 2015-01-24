@@ -57,6 +57,10 @@ func TestNFNT_Resize_conversion(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotEqual(t, 0, s.Len())
 
+	mm, err := mimeBuffer(s.Bytes())
+	assert.Nil(t, err)
+	assert.Equal(t, "image/png", mm)
+
 	cfg, err := png.DecodeConfig(s)
 	assert.Nil(t, err)
 	assert.Equal(t, 80, cfg.Width)
@@ -96,10 +100,38 @@ func TestNFNT_Resize(t *testing.T) {
 	}
 }
 
-func BenchmarkNFNT_Resize(b *testing.B) {
+func BenchmarkNFNT_Resize_JPG(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.jpg", "jpg", "")
+}
+
+func BenchmarkNFNT_Resize_JPG2PNG(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.jpg", "png", "jpg")
+}
+
+func BenchmarkNFNT_Resize_PNG(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.png", "png", "")
+}
+
+func BenchmarkNFNT_Resize_PNG2JPG(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.png", "jpg", "png")
+}
+
+func BenchmarkNFNT_Resize_WEBP2PNG(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.webp", "png", "webp")
+}
+
+func BenchmarkNFNT_Resize_WEBP2JPG(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.webp", "jpg", "webp")
+}
+
+func benchmarkResizeFormat(b *testing.B, fixture, format, fromFormat string) {
+	if fromFormat == "" {
+		fromFormat = format
+	}
+
 	n := NFNT{}
-	r := loadFixture("gopher.jpg")
-	x := ResizeOption{Width: 80, Height: 80, Format: "jpg"}
+	r := loadFixture(fixture)
+	x := ResizeOption{Width: 80, Height: 80, FromFormat: fromFormat, Format: format}
 
 	b.ResetTimer()
 
