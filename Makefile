@@ -13,6 +13,9 @@ cover:
 html:
 	go tool cover -html=coverage.out
 
+dep:
+	godep save
+
 lint:
 	golint
 
