@@ -5,7 +5,7 @@ env:
     - PATH=$HOME/gopath/bin:$PATH
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y gifsicle
+  - sudo apt-get install -y gifsicle libmagic-dev
   - go get github.com/tools/godep
   - godep restore
 script:
