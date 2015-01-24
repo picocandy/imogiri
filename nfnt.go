@@ -1,8 +1,6 @@
 package imogiri
 
 import (
-	"errors"
-	"fmt"
 	"github.com/nfnt/resize"
 	"image"
 	"image/jpeg"
@@ -13,16 +11,12 @@ import (
 type NFNT struct{}
 
 func (n NFNT) Resize(w io.Writer, r io.Reader, opt ResizeOption) error {
-	if opt.Format == "" {
-		return errors.New("Please specify the format of the image")
-	}
-
-	if !n.isSupported(opt.Format) {
-		return fmt.Errorf("Format %q is not supported", opt.Format)
+	err := formatChecker(opt.Format, n.supportedFormats())
+	if err != nil {
+		return err
 	}
 
 	var img image.Image
-	var err error
 
 	switch opt.Format {
 	case "jpg":
@@ -49,14 +43,4 @@ func (n NFNT) Resize(w io.Writer, r io.Reader, opt ResizeOption) error {
 
 func (n NFNT) supportedFormats() []string {
 	return []string{"png", "jpg"}
-}
-
-func (n NFNT) isSupported(format string) bool {
-	for _, f := range n.supportedFormats() {
-		if f == format {
-			return true
-		}
-	}
-
-	return false
 }

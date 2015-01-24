@@ -30,7 +30,7 @@ func TestNFNT_Resize_invalidImage(t *testing.T) {
 	x := ResizeOption{Width: 80, Height: 80, Format: "jpg"}
 	n := NFNT{}
 	s := new(bytes.Buffer)
-	r := loadFixture("invalid.jpg")
+	r := new(bytes.Reader)
 	err := n.Resize(s, r, x)
 	assert.NotNil(t, err)
 	assert.Equal(t, `unexpected EOF`, err.Error())
