@@ -64,3 +64,12 @@ func buildMatrix(sourceFormats, targetFormats []string) []string {
 
 	return matrix
 }
+
+func actionString(action Action) string {
+	switch action {
+	case ResizeAction:
+		return "RESIZE"
+	}
+
+	return ""
+}

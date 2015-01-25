@@ -114,12 +114,3 @@ func (g *Imogiri) Resize(w io.Writer, r io.Reader, opt ResizeOption) error {
 
 	return nil
 }
-
-func actionString(action Action) string {
-	switch action {
-	case ResizeAction:
-		return "RESIZE"
-	}
-
-	return ""
-}
