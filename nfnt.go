@@ -12,14 +12,9 @@ import (
 	"io"
 )
 
-var (
-	nfntSourceFormats = []string{"jpg", "png", "gif", "webp"}
-	nfntTargetFormats = []string{"jpg", "png", "gif"}
-)
-
 type NFNT struct{}
 
-func (n NFNT) Resize(w io.Writer, r io.Reader, opt ResizeOption) error {
+func (n *NFNT) Resize(w io.Writer, r io.Reader, opt ResizeOption) error {
 	err := n.formatChecker(opt.sourceFormat(), opt.Format)
 	if err != nil {
 		return err
@@ -53,7 +48,7 @@ func (n NFNT) Resize(w io.Writer, r io.Reader, opt ResizeOption) error {
 	return n.encode(w, m, opt.Format)
 }
 
-func (n NFNT) decode(r io.Reader, format string) (m image.Image, err error) {
+func (n *NFNT) decode(r io.Reader, format string) (m image.Image, err error) {
 	switch format {
 	case "jpg":
 		m, err = jpeg.Decode(r)
@@ -68,7 +63,7 @@ func (n NFNT) decode(r io.Reader, format string) (m image.Image, err error) {
 	return
 }
 
-func (n NFNT) encode(w io.Writer, m image.Image, format string) error {
+func (n *NFNT) encode(w io.Writer, m image.Image, format string) error {
 	var err error
 
 	switch format {
@@ -83,15 +78,35 @@ func (n NFNT) encode(w io.Writer, m image.Image, format string) error {
 	return err
 }
 
-func (n NFNT) formatChecker(source, target string) error {
-	return formatChecker(nfntSourceFormats, nfntTargetFormats, source, target)
+func (n *NFNT) formatChecker(source, target string) error {
+	return formatChecker(n.sourceFormats(), n.targetFormats(), source, target)
 }
 
-func (n NFNT) resizeImage(img image.Image, width, height uint, interpolation resize.InterpolationFunction) image.Image {
+func (n *NFNT) sourceFormats() []string {
+	return []string{"jpg", "png", "gif", "webp"}
+}
+
+func (n *NFNT) targetFormats() []string {
+	return []string{"jpg", "png", "gif"}
+}
+
+func (n *NFNT) MatrixFormats() []string {
+	return buildMatrix(n.sourceFormats(), n.targetFormats())
+}
+
+func (n *NFNT) SupportedActions() []Action {
+	return []Action{ResizeAction}
+}
+
+func (n *NFNT) Name() string {
+	return "NFNT"
+}
+
+func (n *NFNT) resizeImage(img image.Image, width, height uint, interpolation resize.InterpolationFunction) image.Image {
 	return resize.Resize(width, height, img, interpolation)
 }
 
-func (n NFNT) imageToPaletted(img image.Image) *image.Paletted {
+func (n *NFNT) imageToPaletted(img image.Image) *image.Paletted {
 	pm, ok := img.(*image.Paletted)
 
 	if !ok {

@@ -9,7 +9,7 @@ import (
 
 func TestNFNT_Resize_missingFormat(t *testing.T) {
 	x := ResizeOption{Width: 80, Height: 80, Format: ""}
-	n := NFNT{}
+	n := &NFNT{}
 	s := new(bytes.Buffer)
 	r := new(bytes.Reader)
 	err := n.Resize(s, r, x)
@@ -19,7 +19,7 @@ func TestNFNT_Resize_missingFormat(t *testing.T) {
 
 func TestNFNT_Resize_unknownFormat(t *testing.T) {
 	x := ResizeOption{Width: 80, Height: 80, FromFormat: "png", Format: "box"}
-	n := NFNT{}
+	n := &NFNT{}
 	s := new(bytes.Buffer)
 	r := new(bytes.Reader)
 	err := n.Resize(s, r, x)
@@ -29,7 +29,7 @@ func TestNFNT_Resize_unknownFormat(t *testing.T) {
 
 func TestNFNT_Resize_unknownFromFormat(t *testing.T) {
 	x := ResizeOption{Width: 80, Height: 80, FromFormat: "box", Format: "png"}
-	n := NFNT{}
+	n := &NFNT{}
 	s := new(bytes.Buffer)
 	r := new(bytes.Reader)
 	err := n.Resize(s, r, x)
@@ -39,7 +39,7 @@ func TestNFNT_Resize_unknownFromFormat(t *testing.T) {
 
 func TestNFNT_Resize_invalidImage(t *testing.T) {
 	x := ResizeOption{Width: 80, Height: 80, Format: "jpg"}
-	n := NFNT{}
+	n := &NFNT{}
 	s := new(bytes.Buffer)
 	r := new(bytes.Reader)
 	err := n.Resize(s, r, x)
@@ -49,7 +49,7 @@ func TestNFNT_Resize_invalidImage(t *testing.T) {
 
 func TestNFNT_Resize_conversion(t *testing.T) {
 	x := ResizeOption{Width: 80, Height: 80, FromFormat: "jpg", Format: "png"}
-	n := NFNT{}
+	n := &NFNT{}
 	s := new(bytes.Buffer)
 	r := loadFixture("gopher.jpg")
 
@@ -80,7 +80,7 @@ func TestNFNT_Resize(t *testing.T) {
 	for k, v := range f {
 		for i := range c {
 			x := ResizeOption{Width: 80, Height: 80, FromFormat: k, Format: c[i]}
-			n := NFNT{}
+			n := &NFNT{}
 			s := new(bytes.Buffer)
 			r := loadFixture(v)
 
@@ -160,7 +160,7 @@ func benchmarkResizeFormat(b *testing.B, fixture, format, fromFormat string) {
 		fromFormat = format
 	}
 
-	n := NFNT{}
+	n := &NFNT{}
 	r := loadFixture(fixture)
 	x := ResizeOption{Width: 80, Height: 80, FromFormat: fromFormat, Format: format}
 

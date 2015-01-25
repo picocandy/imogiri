@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/rakyll/magicmime"
+	"strings"
 )
 
 func formatChecker(sourceFormats, targetFormats []string, source, target string) error {
@@ -50,4 +51,16 @@ func mimeBuffer(b []byte) (string, error) {
 	defer m.Close()
 
 	return m.TypeByBuffer(b)
+}
+
+func buildMatrix(sourceFormats, targetFormats []string) []string {
+	matrix := []string{}
+
+	for _, s := range sourceFormats {
+		for _, t := range targetFormats {
+			matrix = append(matrix, strings.Join([]string{s, t}, ":"))
+		}
+	}
+
+	return matrix
 }
