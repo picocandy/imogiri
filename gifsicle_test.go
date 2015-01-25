@@ -73,7 +73,7 @@ func TestGIFSicle_Resize(t *testing.T) {
 	}
 }
 
-func BenchmarkGIFSicle_singleFrame(b *testing.B) {
+func BenchmarkGIFSicle_Resize_GIF(b *testing.B) {
 	g := GIFSicle{}
 	r := loadFixture("gopher.gif")
 	x := ResizeOption{Width: 80, Height: 80, Format: "gif"}
@@ -87,7 +87,7 @@ func BenchmarkGIFSicle_singleFrame(b *testing.B) {
 	}
 }
 
-func BenchmarkGIFSicle_multipleFrames(b *testing.B) {
+func BenchmarkGIFSicle_Resize_animatedGIF(b *testing.B) {
 	g := GIFSicle{}
 	r := loadFixture("animation.gif")
 	x := ResizeOption{Width: 80, Height: 80, Format: "gif"}

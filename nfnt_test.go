@@ -72,9 +72,10 @@ func TestNFNT_Resize(t *testing.T) {
 		"png":  "gopher.png",
 		"jpg":  "gopher.jpg",
 		"webp": "gopher.webp",
+		"gif":  "gopher.gif",
 	}
 
-	c := []string{"png", "jpg"}
+	c := []string{"png", "jpg", "gif"}
 
 	for k, v := range f {
 		for i := range c {
@@ -95,6 +96,8 @@ func TestNFNT_Resize(t *testing.T) {
 				assert.Equal(t, "image/png", mm)
 			case "jpg":
 				assert.Equal(t, "image/jpeg", mm)
+			case "gif":
+				assert.Equal(t, "image/gif", mm)
 			}
 		}
 	}
@@ -108,6 +111,10 @@ func BenchmarkNFNT_Resize_JPG2PNG(b *testing.B) {
 	benchmarkResizeFormat(b, "gopher.jpg", "png", "jpg")
 }
 
+func BenchmarkNFNT_Resize_JPG2GIF(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.jpg", "gif", "jpg")
+}
+
 func BenchmarkNFNT_Resize_PNG(b *testing.B) {
 	benchmarkResizeFormat(b, "gopher.png", "png", "")
 }
@@ -116,12 +123,36 @@ func BenchmarkNFNT_Resize_PNG2JPG(b *testing.B) {
 	benchmarkResizeFormat(b, "gopher.png", "jpg", "png")
 }
 
+func BenchmarkNFNT_Resize_PNG2GIF(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.png", "gif", "png")
+}
+
 func BenchmarkNFNT_Resize_WEBP2PNG(b *testing.B) {
 	benchmarkResizeFormat(b, "gopher.webp", "png", "webp")
 }
 
 func BenchmarkNFNT_Resize_WEBP2JPG(b *testing.B) {
 	benchmarkResizeFormat(b, "gopher.webp", "jpg", "webp")
+}
+
+func BenchmarkNFNT_Resize_WEBP2GIF(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.webp", "GIF", "webp")
+}
+
+func BenchmarkNFNT_Resize_animatedGIF(b *testing.B) {
+	benchmarkResizeFormat(b, "animation.gif", "gif", "")
+}
+
+func BenchmarkNFNT_Resize_GIF(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.gif", "gif", "")
+}
+
+func BenchmarkNFNT_Resize_GIF2PNG(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.gif", "png", "gif")
+}
+
+func BenchmarkNFNT_Resize_GIF2JPG(b *testing.B) {
+	benchmarkResizeFormat(b, "gopher.gif", "jpg", "gif")
 }
 
 func benchmarkResizeFormat(b *testing.B, fixture, format, fromFormat string) {
