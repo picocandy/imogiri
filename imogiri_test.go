@@ -42,6 +42,18 @@ func TestNewImogiri(t *testing.T) {
 	assert.Equal(t, map[Action][]string{ResizeAction: []string{"FirstEngine", "SecondEngine"}}, g.actionMatrix)
 }
 
+func TestImogiri_RegisterEngine_multipleRegistration(t *testing.T) {
+	n := &EngineTest{}
+	g := &Imogiri{}
+
+	err := g.RegisterEngine(n)
+	assert.Nil(t, err)
+
+	err = g.RegisterEngine(n)
+	assert.NotNil(t, err)
+	assert.Equal(t, `Engine "FirstEngine" already registered`, err.Error())
+}
+
 func TestImogiri_RegisterEngine(t *testing.T) {
 	n := &EngineTest{}
 	g := &Imogiri{}

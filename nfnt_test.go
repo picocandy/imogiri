@@ -7,6 +7,34 @@ import (
 	"testing"
 )
 
+func TestNFNT_Namet(t *testing.T) {
+	n := &NFNT{}
+	assert.Equal(t, "NFNT", n.Name())
+}
+
+func TestNFNT_MatrixFormats(t *testing.T) {
+	n := &NFNT{}
+	f := n.MatrixFormats()
+	assert.Equal(t, 12, len(f))
+	assert.Contains(t, f, "jpg:jpg")
+	assert.Contains(t, f, "jpg:png")
+	assert.Contains(t, f, "jpg:gif")
+	assert.Contains(t, f, "png:jpg")
+	assert.Contains(t, f, "png:png")
+	assert.Contains(t, f, "png:gif")
+	assert.Contains(t, f, "gif:jpg")
+	assert.Contains(t, f, "gif:png")
+	assert.Contains(t, f, "gif:gif")
+	assert.Contains(t, f, "webp:jpg")
+	assert.Contains(t, f, "webp:png")
+	assert.Contains(t, f, "webp:gif")
+}
+
+func TestNFNT_SupportedActions(t *testing.T) {
+	n := &NFNT{}
+	assert.Equal(t, []Action{ResizeAction}, n.SupportedActions())
+}
+
 func TestNFNT_Resize_missingFormat(t *testing.T) {
 	x := ResizeOption{Width: 80, Height: 80, Format: ""}
 	n := &NFNT{}

@@ -14,6 +14,21 @@ func TestGifsicle_executable(t *testing.T) {
 	assert.NotEmpty(t, path)
 }
 
+func TestGifsicle_Name(t *testing.T) {
+	g := &Gifsicle{}
+	assert.Equal(t, "gifsicle", g.Name())
+}
+
+func TestGifsicle_MatrixFormats(t *testing.T) {
+	g := &Gifsicle{}
+	assert.Equal(t, []string{"gif:gif"}, g.MatrixFormats())
+}
+
+func TestGifsicle_SupportedActions(t *testing.T) {
+	g := &Gifsicle{}
+	assert.Equal(t, []Action{ResizeAction}, g.SupportedActions())
+}
+
 func TestGifsicle_Resize_missingFormat(t *testing.T) {
 	x := ResizeOption{Width: 80, Height: 80, Format: ""}
 	g := &Gifsicle{}
