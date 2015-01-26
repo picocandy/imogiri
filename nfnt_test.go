@@ -164,7 +164,7 @@ func BenchmarkNFNT_Resize_WEBP2JPG(b *testing.B) {
 }
 
 func BenchmarkNFNT_Resize_WEBP2GIF(b *testing.B) {
-	benchmarkResizeFormat(b, "gopher.webp", "GIF", "webp")
+	benchmarkResizeFormat(b, "gopher.webp", "gif", "webp")
 }
 
 func BenchmarkNFNT_Resize_animatedGIF(b *testing.B) {
