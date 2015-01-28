@@ -25,13 +25,13 @@ type Imogiri struct {
 }
 
 func NewImogiri(engines ...Engineer) *Imogiri {
-	i := &Imogiri{}
+	g := &Imogiri{}
 
 	for _, e := range engines {
-		i.RegisterEngine(e)
+		g.RegisterEngine(e)
 	}
 
-	return i
+	return g
 }
 
 func (g *Imogiri) RegisterEngine(engine Engineer) error {

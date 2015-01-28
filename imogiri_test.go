@@ -38,8 +38,8 @@ func TestNewImogiri(t *testing.T) {
 	g := NewImogiri(n, a)
 
 	assert.Equal(t, map[string]Engineer{"FirstEngine": n, "SecondEngine": a}, g.engines)
-	assert.Equal(t, map[string][]string{"png:png": []string{"FirstEngine", "SecondEngine"}}, g.formatMatrix)
-	assert.Equal(t, map[Action][]string{ResizeAction: []string{"FirstEngine", "SecondEngine"}}, g.actionMatrix)
+	assert.Equal(t, map[string][]string{"png:png": {"FirstEngine", "SecondEngine"}}, g.formatMatrix)
+	assert.Equal(t, map[Action][]string{ResizeAction: {"FirstEngine", "SecondEngine"}}, g.actionMatrix)
 }
 
 func TestImogiri_RegisterEngine_multipleRegistration(t *testing.T) {
@@ -60,8 +60,8 @@ func TestImogiri_RegisterEngine(t *testing.T) {
 	g.RegisterEngine(n)
 
 	assert.Equal(t, map[string]Engineer{"FirstEngine": n}, g.engines)
-	assert.Equal(t, map[string][]string{"png:png": []string{"FirstEngine"}}, g.formatMatrix)
-	assert.Equal(t, map[Action][]string{ResizeAction: []string{"FirstEngine"}}, g.actionMatrix)
+	assert.Equal(t, map[string][]string{"png:png": {"FirstEngine"}}, g.formatMatrix)
+	assert.Equal(t, map[Action][]string{ResizeAction: {"FirstEngine"}}, g.actionMatrix)
 }
 
 func TestImogiri_Resize_noEngine(t *testing.T) {
