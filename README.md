@@ -1,3 +1,3 @@
 # imogiri
 
-[![Build Status](https://travis-ci.org/subosito/imogiri.svg)](https://travis-ci.org/subosito/imogiri)
+[![Build Status](https://travis-ci.org/picocandy/imogiri.svg)](https://travis-ci.org/picocandy/imogiri)
