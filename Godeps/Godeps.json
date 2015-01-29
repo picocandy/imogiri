@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/subosito/imogiri",
+	"ImportPath": "github.com/picocandy/imogiri",
 	"GoVersion": "go1.4.1",
 	"Deps": [
 		{

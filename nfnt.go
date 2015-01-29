@@ -2,7 +2,7 @@ package imogiri
 
 import (
 	"github.com/nfnt/resize"
-	"github.com/subosito/imogiri/quantizer"
+	"github.com/picocandy/imogiri/quantizer"
 	"golang.org/x/image/webp"
 	"image"
 	"image/draw"
